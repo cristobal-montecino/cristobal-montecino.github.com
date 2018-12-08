@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Apuntes numérico - Integración Numérica</title>
+  <meta name="author" lang="es" content="Cristóbal Montecino">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
+</head>
+<body>
+  <main>
+    <section>
+      <h2>Integración numérica por interpolación</h2>
+      <section>
+        <h2>Formulas compuestas de Newton-Cotes</h2>
+        <p>Consiste en subdividir el intervalo de manera equiespaciada y aplicar en cada una alguna de las formulas simples de Newton-Cotes.</p>
+        <p>Por ejemplo, subdividimos el intervalo <span>\([a,b]\)</span> en <span>\(n\)</span> subintervalos. Para esto, escogemos el tamaño de los pasos <span>\(h = \frac{b - a}{n}\)</span> y tenemos que los subintervalos son <span>\([x_i, x_{i+1}]\)</span> con <span>\(\small i = 0, ..., n-1\)</span> donde <span>\(x_k = x_0 + h\,k\)</span>.</p>
+        <div class="formula">
+          <p>Si se quiere utilizar una regla que requiere de <span>\(m\)</span> nodos para cada subintervalo, entonces la aproximación queda como: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n - 1}\int_{x_i}^{x_{i+1}} f(x)\,dx\\&= \sum_{i = 0}^{n-1} \sum_{k = 0}^{m - 1} w_k\,f(y_{k, i}) + \sum_{i = 0}^{n-1} R_i\end{aligned}$$ donde <span>\(y_{k, i} \in [x_i, x_{i+1}]\)</span> para todo <span>\(\small k = 0, ..., m-1\)</span> y para  <span>\(\small   i = 0, ..., n-1\)</span>.</p>
+        </div>
+        <section>
+          <h3>Regla del punto medio compuesta</h3>
+          <p>Consiste en dividir el intervalo en <span>\(n\)</span> subintervalos y aplicar la regla del punto medio a cada uno.</p>
+          <div class="formula">
+            <p>Es la siguiente: $$\int_a^b f(x)\,dx = \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + R$$ donde <span>\(|R| \le \frac{h^2}{24}(b-a)\,\max{\xi \in [a,b]}|f''(\xi)|\)</span>.</p>
+          </div>
+          <div class="expandible-content">
+            <input type="checkbox" id="demostracion-valor-intermedio-generalizado" label="">
+            <label for="demostracion-valor-intermedio-generalizado"><h4>Demostración</h4></label>
+            <div class="expandible">
+              <div class="formula">
+                <p>Tenemos por definición: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n-1} \int_{x_i}^{x_{i+1}} f(x)\,dx\\&\approx \sum_{i=0}^{n-1} (x_{i+1} - x_i)\,f\left(\frac{x_i + x_{i+1}}{2}\right),\hspace{10pt}[\small \text{Utilizando equiespaciado}]\\&\approx h \sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right)\\&= \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + \sum_{i = 0}^{n-1}R_i\end{aligned}$$</p>
+                <p>Calculamos el error pidiendo <span>\(f \in C^2[a,b]\)</span>: $$\begin{aligned}R &= \sum_{i = 0}^{n-1}R_i\\&= \sum_{i = 0}^{n-1}\frac{(x_{i+1} - x_i)^3}{24}\,f''(\xi_i)\\&= \sum_{i = 0}^{n-1}\frac{h^3}{24}\,f''(\xi_i)\end{aligned}$$</p>
+                <p>Acotamos el error: $$|R| \le \left|\frac{h^3}{24}\sum_{i = 0}^{n-1} f''(\xi_i)\right| \le \frac{h^3}{24}\left|\sum_{i = 0}^{n-1} \max_{\xi \in [a,b]}f''(\xi)\right| = \frac{h^3}{24} n\, \left|\max_{\xi \in [a,b]}f''(\xi)\right| = \frac{h^3}{24} n\,\max_{\xi \in [a,b]}|f''(\xi)|$$ Finalmente como <span>\(h = \frac{b-a}{n}\)</span>, tenemos que: $$|R| \le \frac{h^2}{24}(b-a)\,\max_{\xi \in [a,b]}|f''(\xi)|$$</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+      <nav>
+        <div style="display: inline-block; float: left;">
+          <a href="formulas-newton-cotes.html">Anterior - Formulas simples de Newton-Cotes</a>
+        </div>
+        <div style="display: inline-block; float: right;">
+          <a href="#">Siguiente</a>
+        </div>
+      </nav>
+      <section>
+        <div class="references">
+          <h3>Referencias</h3>
+          <ul>
+            <li><a href="http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf">http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf</a></li>
+            <li><a href="https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/">https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/</a></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html> 

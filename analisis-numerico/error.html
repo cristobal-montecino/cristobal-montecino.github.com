@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="utf-8">
-	<title>Apuntes numérico - Integración Numérica</title>
-	<meta name="author" lang="es" content="Cristóbal Montecino">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
+  <meta charset="utf-8">
+  <title>Apuntes numérico - Integración Numérica</title>
+  <meta name="author" lang="es" content="Cristóbal Montecino">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
 </head>
 <body>
-	<main>
-		<section>
-			<h2>Integración numérica por interpolación</h2>
-			<section>
-				<h3>Error de la integración numérica</h3>
-				<p>Sabemos que al considerar el polinomio interpolador en la forma de Newton, tenemos que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{k = 0}^n w_i f(x_i) + \int_a^b E(x)\,dx\\&= \int_a^b N(x)\,dx + \int_a^b E(x)\,dx\end{aligned}$$</p>
-				<p>También, sabemos que el error de la interpolación en la forma de Newton es: $$E(x) = f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^{n} (x - x_k)$$</p>
-				<div class="formula">
-					<p>Por lo tanto, tenemos una expresión para el error de la integración numérica: $$R = \int_a^b E(x)\,dx = \int_a^b f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^n (x-x_k)\,dx$$</p>
-				</div>
-				<p>Como el error depende de los nodos, es claro que depende de la regla y de la función que escojamos; Es por esto que en la practica no podamos encontrar el error exacto y quedara dependiendo de un parámetro <span>\(\xi\)</span>.</p>
-				<div class="formula">
-					<p>Para obtener una expresión del error, utilizaremos el teorema del valor intermedio para integrales.</p>
-					<p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> no cambia de signo, entonces: $$R = f[x_0, ..., x_n, \eta] \int_a^b \prod_{k = 0}^n (x-x_k)\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
-					<p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> cambia de signo y podemos añadir puntos, se pueden repetir, de manera que no cambie de signo, entonces aplicamos lo anterior.</p>
-					<p>Además, si <span>\(f \in C^{n+1}[a,b]\)</span> tenemos que existe <span>\(\xi \in [a,b]\)</span> tal que: $$f[x_0, ..., x_n, \eta] = \frac{f(\xi)^{n+1}}{(n+1)!}$$</p>
-				</div>
-				<div class="expandible-content">
-					<input type="checkbox" id="demostracion-valor-intermedio-generalizado" label="">
-					<label for="demostracion-valor-intermedio-generalizado"><h4>Demostración</h4></label>
-					<div class="expandible">
-						<div class="formula">
-							<p>Si tenemos <span>\(f(x_i) = 0\)</span> para <span>\(i = 0, ..., n\)</span> con <span>\(f \in C[a,b]\)</span>; sabemos que <span>\(f(x_i) = f(x_{i+1})\)</span> para <span>\(i = 0, ..., n-1\)</span>, entonces, por el teorema de Rolle, existen <span>\(y_i \in (x_i, x_{i+1})\)</span> tales que <span>\(f'(y_i) = 0\)</span>.</p>
-							<p>Luego, consideramos la función <span>\(f - p\)</span>, que es la función original restada con el polinomio interpolador en los nodos añadiendo el punto <span>\(\eta\)</span>; sabemos que los nodos son ceros de esta función. Por lo tanto, por lo probado anteriormente, existen <span>\(n - 1\)</span> puntos donde la primera derivada se hace cero. Entonces, de manera reiterada encontraremos un punto <span>\(\xi \in [a,b]\)</span> tal que la <span>\(n + 1\)</span> derivada se hace cero, para esa función.</p>
-							<div class="formula">
-								<p>i.e. Considerando la forma de Newton para el polinomio: $$\begin{aligned}0 &= f^{(n+1)}(\xi) - p^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - N^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - f[x_0, ..., x_n, \eta]\,(n+1)!\end{aligned}$$</p>
-							</div>
-							<p>Finalmente, obtenemos lo que queriamos probar: $$f[x_0, ..., x_n, \eta] = \frac{f^{(n+1)}(\xi)}{(n+1)!}$$ para algún <span>\(\xi \in [a,b]\)</span>.</p>
-						</div>
-					</div>
-				</div>
-				<p>Notar que lo mencionado anteriormente son las herramientas que ocuparemos para calcular los errores.</p>
-				<div class="formula">
-					<p>Finalmente, tenemos que la regla de la cuadratura se puede escribir como: $$\int_a^b f(x)\,dx = \sum_{k=0}^n w_k\,f(x_k) + R(\xi)$$ para algún <span>\(\xi \in [a,b]\)</span></p>
-				</div>
-				<p>En la practica, como el valor de <span>\(\xi\)</span> es desconocido, acotaremos el error por el máximo valor de R variando <span>\(\xi\)</span> en el intervalo.</p>
-				<div class="formula">
-					<p>Es decir, el error se estima como: $$|R(\xi)| \le \max_{\widehat\xi \in [a,b]} |R(\widehat\xi)|$$</p>
-				</div>
-			</section>
-			<nav>
-				<div style="display: inline-block; float: left;">
-					<a href="integracion.html">Anterior - Regla de cuadratura</a>
-				</div>
-				<div style="display: inline-block; float: right;">
-					<a href="formulas-newton-cotes.html">Siguiente - Formulas simples de Newton-Cotes</a>
-				</div>
-			</nav>
-			<section>
-				<div class="references">
-					<h3>Referencias</h3>
-					<ul>
-						<li><a href="http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf">http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf</a></li>
-						<li><a href="https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/">https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/</a></li>
-					</ul>
-				</div>
-			</section>
-		</section>
-	</main>
+  <main>
+    <section>
+      <h2>Integración numérica por interpolación</h2>
+      <section>
+        <h3>Error de la integración numérica</h3>
+        <p>Sabemos que al considerar el polinomio interpolador en la forma de Newton, tenemos que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{k = 0}^n w_k f(x_k) + \int_a^b E(x)\,dx\\&= \int_a^b N(x)\,dx + \int_a^b E(x)\,dx\end{aligned}$$</p>
+        <p>También, sabemos que el error de la interpolación en la forma de Newton es: $$E(x) = f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^{n} (x - x_k)$$</p>
+        <div class="formula">
+          <p>Por lo tanto, tenemos una expresión para el error de la integración numérica: $$R = \int_a^b E(x)\,dx = \int_a^b f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^n (x-x_k)\,dx$$</p>
+        </div>
+        <p>Como el error depende de los nodos, es claro que depende de la regla y de la función que escojamos; Es por esto que en la practica no podamos encontrar el error exacto y quedara dependiendo de un parámetro <span>\(\xi\)</span>.</p>
+        <div class="formula">
+          <p>Para obtener una expresión del error, utilizaremos el teorema del valor intermedio para integrales.</p>
+          <p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> no cambia de signo, entonces: $$R = f[x_0, ..., x_n, \eta] \int_a^b \prod_{k = 0}^n (x-x_k)\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
+          <p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> cambia de signo y podemos añadir puntos, se pueden repetir, de manera que no cambie de signo, entonces aplicamos lo anterior.</p>
+          <p>Además, si <span>\(f \in C^{n+1}[a,b]\)</span> tenemos que existe <span>\(\xi \in [a,b]\)</span> tal que: $$f[x_0, ..., x_n, \eta] = \frac{f(\xi)^{n+1}}{(n+1)!}$$</p>
+        </div>
+        <div class="expandible-content">
+          <input type="checkbox" id="demostracion-valor-intermedio-generalizado" label="">
+          <label for="demostracion-valor-intermedio-generalizado"><h4>Demostración</h4></label>
+          <div class="expandible">
+            <div class="formula">
+              <p>Si tenemos <span>\(f(x_i) = 0\)</span> para <span>\(i = 0, ..., n\)</span> con <span>\(f \in C[a,b]\)</span>; sabemos que <span>\(f(x_i) = f(x_{i+1})\)</span> para <span>\(i = 0, ..., n-1\)</span>, entonces, por el teorema de Rolle, existen <span>\(y_i \in (x_i, x_{i+1})\)</span> tales que <span>\(f'(y_i) = 0\)</span>.</p>
+              <p>Luego, consideramos la función <span>\(f - p\)</span>, que es la función original restada con el polinomio interpolador en los nodos añadiendo el punto <span>\(\eta\)</span>; sabemos que los nodos son ceros de esta función. Por lo tanto, por lo probado anteriormente, existen <span>\(n - 1\)</span> puntos donde la primera derivada se hace cero. Entonces, de manera reiterada encontraremos un punto <span>\(\xi \in [a,b]\)</span> tal que la <span>\(n + 1\)</span> derivada se hace cero, para esa función.</p>
+              <div class="formula">
+                <p>i.e. Considerando la forma de Newton para el polinomio: $$\begin{aligned}0 &= f^{(n+1)}(\xi) - p^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - N^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - f[x_0, ..., x_n, \eta]\,(n+1)!\end{aligned}$$</p>
+              </div>
+              <p>Finalmente, obtenemos lo que queriamos probar: $$f[x_0, ..., x_n, \eta] = \frac{f^{(n+1)}(\xi)}{(n+1)!}$$ para algún <span>\(\xi \in [a,b]\)</span>.</p>
+            </div>
+          </div>
+        </div>
+        <p>Notar que lo mencionado anteriormente son las herramientas que ocuparemos para calcular los errores.</p>
+        <div class="formula">
+          <p>Finalmente, tenemos que la regla de la cuadratura se puede escribir como: $$\int_a^b f(x)\,dx = \sum_{k=0}^n w_k\,f(x_k) + R(\xi)$$ para algún <span>\(\xi \in [a,b]\)</span></p>
+        </div>
+        <p>En la practica, como el valor de <span>\(\xi\)</span> es desconocido, acotaremos el error por el máximo valor de R variando <span>\(\xi\)</span> en el intervalo.</p>
+        <div class="formula">
+          <p>Es decir, el error se estima como: $$|R(\xi)| \le \max_{\widehat\xi \in [a,b]} |R(\widehat\xi)|$$</p>
+        </div>
+      </section>
+      <nav>
+        <div style="display: inline-block; float: left;">
+          <a href="integracion.html">Anterior - Regla de cuadratura</a>
+        </div>
+        <div style="display: inline-block; float: right;">
+          <a href="formulas-newton-cotes.html">Siguiente - Formulas simples de Newton-Cotes</a>
+        </div>
+      </nav>
+      <section>
+        <div class="references">
+          <h3>Referencias</h3>
+          <ul>
+            <li><a href="http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf">http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf</a></li>
+            <li><a href="https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/">https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/</a></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
 </body>
-</html>	
+</html> 
