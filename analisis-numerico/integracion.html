@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Apuntes numérico - Integración Numérica</title>
+	<meta name="author" lang="es" content="Cristóbal Montecino">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
+</head>
+<body>
+	<main>	
+		<section>
+			<h2>Integración numérica por interpolación</h2>
+			<section>
+				<h3>Regla de cuadratura</h3>
+					<p>Cuando queremos aproximar numéricamente el valor de la integral utilizando una combinación lineal utilizamos la regla de la cuadratura.</p>
+				<div class="formula">
+					<p>i.e. $$\int_a^b f(x)\,dx = \sum_{k = 0}^{n} w_k\,f\left(x_k\right) + R$$ donde \(R\) es el error de la integración numérica.</p>
+					<p>Los valores \(\{x_k\}\) reciben el nombre de nodos y se eligen de manera que estén dentro del intervalo \([a,b]\), y los valores \(\{w_k\}\) reciben el nombre de pesos.</p>
+				</div>
+				<p>Notar que estos valores están determinados por la regla que se escoja.</p>
+				<p>Para la integración numérica por interpolación, aproximaremos nuestra función \(f\) utilizando una interpolación polinómica en los nodos (\(\{x_k\}\)).</p>
+
+				<div class="formula">
+					<p>Obtenemos: $$f(x) = p(x) + E(x)$$ donde \(E(x)\) es el error de la interpolación para el punto \(x\).
+
+					<p>De esta manera, obtendremos el valor de los pesos y el error: $$\begin{aligned}\int_a^b f(x)\,dx &= \int_a^b p(x)\,dx + \int_a^b E(x)\,dx\\&= \sum_{k = 0}^n w_i\,p(x_i) + \int_a^b E(x)\,dx\end{aligned}$$</p>
+					<div class="formula">
+						$$\int_a^b f(x)\,dx = \sum_{k = 0}^n w_i\,f(x_i) + \int_a^b E(x)\,dx$$
+					</div>
+				</div>
+
+				<p>Recordar que el polinomio interpolador es único y lo consideraremos en la forma de Lagrange para poder calcular los pesos y en la forma de Newton para calcular el error.</p>
+			</section>
+			<nav>
+				<div style="display: inline-block;">
+					<a href="#">Anterior</a>
+				</div>
+				<div style="display: inline-block; float: right;">
+					<a href="error.html">Siguiente - Error de la integración numérica</a>
+				</div>
+			</nav>
+			<section>
+				<div class="references">
+					<h3>Referencias</h3>
+					<ul>
+						<li><a href="http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf">http://lya.fciencias.unam.mx/gfgf/sc091/archivos/IntegracionNumerica.pdf</a></li>
+						<li><a href="https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/">https://www.yumpu.com/es/document/view/14386382/mat-270-analisis-numerico-ramos-utfsm/</a></li>
+					</ul>
+				</div>
+			</section>
+		</section>
+	</main>
+</body>
+</html>
