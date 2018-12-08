@@ -15,14 +15,14 @@
 				<h3>Regla de cuadratura</h3>
 					<p>Cuando queremos aproximar numéricamente el valor de la integral utilizando una combinación lineal utilizamos la regla de la cuadratura.</p>
 				<div class="formula">
-					<p>i.e. $$\int_a^b f(x)\,dx = \sum_{k = 0}^{n} w_k\,f\left(x_k\right) + R$$ donde \(R\) es el error de la integración numérica.</p>
-					<p>Los valores \(\{x_k\}\) reciben el nombre de nodos y se eligen de manera que estén dentro del intervalo \([a,b]\), y los valores \(\{w_k\}\) reciben el nombre de pesos.</p>
+					<p>i.e. $$\int_a^b f(x)\,dx = \sum_{k = 0}^{n} w_k\,f\left(x_k\right) + R$$ donde <span>\(R\)</span> es el error de la integración numérica.</p>
+					<p>Los valores <span>\(\{x_k\}\)</span> reciben el nombre de nodos y se eligen de manera que estén dentro del intervalo <span>\([a,b]\)</span>, y los valores <span>\(\{w_k\}\)</span> reciben el nombre de pesos.</p>
 				</div>
 				<p>Notar que estos valores están determinados por la regla que se escoja.</p>
-				<p>Para la integración numérica por interpolación, aproximaremos nuestra función \(f\) utilizando una interpolación polinómica en los nodos (\(\{x_k\}\)).</p>
+				<p>Para la integración numérica por interpolación, aproximaremos nuestra función <span>\(f\)</span> utilizando una interpolación polinómica en los nodos (<span>\(\{x_k\}\)</span>).</p>
 
 				<div class="formula">
-					<p>Obtenemos: $$f(x) = p(x) + E(x)$$ donde \(E(x)\) es el error de la interpolación para el punto \(x\).
+					<p>Obtenemos: $$f(x) = p(x) + E(x)$$ donde <span>\(E(x)\)</span> es el error de la interpolación para el punto <span>\(x\)</span>.
 
 					<p>De esta manera, obtendremos el valor de los pesos y el error: $$\begin{aligned}\int_a^b f(x)\,dx &= \int_a^b p(x)\,dx + \int_a^b E(x)\,dx\\&= \sum_{k = 0}^n w_i\,p(x_i) + \int_a^b E(x)\,dx\end{aligned}$$</p>
 					<div class="formula">
@@ -33,7 +33,7 @@
 				<p>Recordar que el polinomio interpolador es único y lo consideraremos en la forma de Lagrange para poder calcular los pesos y en la forma de Newton para calcular el error.</p>
 			</section>
 			<nav>
-				<div style="display: inline-block;">
+				<div style="display: inline-block; float: left;">
 					<a href="#">Anterior</a>
 				</div>
 				<div style="display: inline-block; float: right;">
