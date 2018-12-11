@@ -18,7 +18,7 @@
           <p>Consiste en aproximar la integrar por un rectángulo con largo la longitud del intervalo y de altura la imagen del punto inicial</p>
           <p>Escogemos el nodo como el punto <span>\(x_0 = f(a)\)</span> y obtenemos que el polinomio interpolador es <span>\(f(a)\)</span>. Luego de integrarlo, obtenemos que el peso del nodo es <span>\((b-a)\)</span>.</p>
           <div class="formula">
-            <p>Por lo tanto, la regla del rectángulo es: $$\int_a^b f(x)\,dx = (b-a)f(a) + R(\xi)$$ donde el error <span>\(R(\xi) = \frac{(b-a)^2}{2}\,f'(\xi)\)</span>, si <span>\(f \in C[a,b]\)</span>.</p>
+            <p>Por lo tanto, la regla del rectángulo es: $$\int_a^b f(x)\,dx = (b-a)f(a) + R(\xi)$$ donde el error <span>\(R(\xi) = \frac{(b-a)^2}{2}\,f'(\xi)\)</span> para algún <span>\(\xi \in (a,b)\)</span>, si <span>\(f \in C[a,b]\)</span>.</p>
           </div>
           <div class="expandible-content">
             <input type="checkbox" id="error-regla-rectangulos" label="">
@@ -64,7 +64,7 @@
           <div class="formula">
             <p>Resumiendo, la regla se determina por:</p>
             $$\int_a^b f(x)\,dx = (b-a)\left(\frac{f(a) + f(b)}{2}\right) + R(\xi)$$
-            <p style="margin-top: 25pt;">donde el error es <span>\(R(\xi) = -\frac{(b-a)^3}{12}\,f''(\xi)\)</span>, para algún <span>\(\xi \in (a,b)\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
+            <p style="margin-top: 25pt;">donde el error es <span>\(R(\xi) = -\frac{(b-a)^3}{12}\,f''(\xi)\)</span> para algún <span>\(\xi \in (a,b)\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
           </div>
           <div class="expandible-content">
             <input type="checkbox" id="error-trapecios" label="">
