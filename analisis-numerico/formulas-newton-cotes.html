@@ -27,7 +27,7 @@
               <div class="formula">
                 <p>Reemplazando en la formula de error tenemos: $$R = \int_a^b f[a, x]\,(x-a)\,dx$$</p>
                 <p>Luego, como <span>\(x-a\)</span> no cambia de signo en el intervalo <span>\([a,b]\)</span>, tenemos por el 
-                teorema de valor medio para integrales: $$R = f[a,\eta]\int_a^b (x-a)\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
+                teorema de valor medio para integrales: $$R = f[a,\eta]\int_a^b (x-a)\,dx$$ para algún <span>\(\eta \in (a,b)\)</span>.</p>
                 <p>Pidiendo <span>\(f \in C[a,b]\)</span> tenemos, por el teorema de valor medio para diferencias divididas, que: $$\begin{aligned}R(\xi) &= f'(\xi)\int_a^b (x-a)\,dx\\&= \frac{(b-a)^2}{2}\,f'(\xi)\end{aligned}$$</p>
               </div>
             </div>
@@ -40,7 +40,7 @@
           <p>El peso del nodo es <span>\((b-a)\)</span> y se obtiene al integrar el polinomio interpolador que es <span>\(f(x_0)\)</span>.</p>
           <div class="formula">
             <p>Por lo tanto, la regla del punto medio es la siguiente:$$\int_a^b f(x)\,dx = (b-a)\,f\left(\frac{a+b}{2}\right) + R(\xi)$$</p>
-            <p>donde el error es <span>\(R(\xi) = \frac{(b-a)^3}{24}\,f''(\xi)\)</span> para algún <span>\(\xi \in [a,b]\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
+            <p>donde el error es <span>\(R(\xi) = \frac{(b-a)^3}{24}\,f''(\xi)\)</span> para algún <span>\(\xi \in (a,b)\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
           </div>
           <div class="expandible-content">
             <input type="checkbox" id="error-formula-punto-medio" label="">
@@ -51,7 +51,7 @@
                 <p>Como no podemos aplicar el teorema del valor medio para integrales, consideramos la interpolación polinómica de Hermite y obtenemos: $$\begin{aligned}\int_a^b f(x)\,dx &\approx \int_a^b f\left(\frac{a+b}{2}\right) + f'\left(\frac{a+b}{2}\right)\left(x-\frac{a+b}{2}\right)\,dx\\&\approx (b-a)f\left(\frac{a+b}{2}\right) + 0\\&= (b-a)f\left(\frac{a+b}{2}\right) + R\end{aligned}$$</p>
                 <p>Reemplazando en la formula de error, obtenemos: $$R = \int_a^b f[x_0, x_0, x]\,(x-x_0)^2\,dx$$</p>
                 <p>Notar que <span>\(f[x_0, x_0, x]\)</span> no es la diferencia dividida usual, pero es equivalente.</p>
-                <p>Ahora como <span>\((x-x_0)^2\)</span> no cambia de signo, utilizamos el teorema de valor medio para integrales: $$R = f[x_0, x_0, \eta]\,\int_a^b (x-x_0)^2\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
+                <p>Ahora como <span>\((x-x_0)^2\)</span> no cambia de signo, utilizamos el teorema de valor medio para integrales: $$R = f[x_0, x_0, \eta]\,\int_a^b (x-x_0)^2\,dx$$ para algún <span>\(\eta \in (a,b)\)</span>.</p>
                 <p>Ahora, pidiendo que <span>\(f \in C^2[a,b]\)</span> y utilizando el teorema de valor medio para diferencias divididas, tenemos que: $$\begin{aligned}R(\xi) &= \frac{f''(\xi)}{2}\int_a^b (x-x_0)^2\,dx\\&= \frac{(b-a)^3}{24}\,f''(\xi)\end{aligned}$$</p>
               </div>
             </div>
@@ -64,7 +64,7 @@
           <div class="formula">
             <p>Resumiendo, la regla se determina por:</p>
             $$\int_a^b f(x)\,dx = (b-a)\left(\frac{f(a) + f(b)}{2}\right) + R(\xi)$$
-            <p style="margin-top: 25pt;">donde el error es <span>\(R(\xi) = -\frac{(b-a)^3}{12}\,f''(\xi)\)</span>, para algún <span>\(\xi \in [a,b]\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
+            <p style="margin-top: 25pt;">donde el error es <span>\(R(\xi) = -\frac{(b-a)^3}{12}\,f''(\xi)\)</span>, para algún <span>\(\xi \in (a,b)\)</span>, si <span>\(f \in C^2[a, b]\)</span>.</p>
           </div>
           <div class="expandible-content">
             <input type="checkbox" id="error-trapecios" label="">
@@ -72,7 +72,7 @@
             <div class="expandible">
               <div class="formula">
                 <p>Al reemplazar en la formula de error, obtenemos: $$R = \int_a^b f[x_0, x_1, x]\,(x-a)(x-b)\,dx$$</p>
-                <p>Utilizando el teorema de valor medio para integrales: $$R = f[x_0, x_1, \eta]\,\int_a^b (x-a)(x-b)\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
+                <p>Utilizando el teorema de valor medio para integrales: $$R = f[x_0, x_1, \eta]\,\int_a^b (x-a)(x-b)\,dx$$ para algún <span>\(\eta \in (a,b)\)</span>.</p>
                 <p>Pidiendo <span>\(f \in C^2[a,b]\)</span>, tenemos, por el teorema de valor medio para diferencias divididas, que: $$\begin{aligned}R(\xi) &= \frac{f''(\xi)}{2}\int_a^b (x-a)(x-b)\,dx\\&= -\frac{(b-a)^3}{12}\,f''(\xi)\end{aligned}$$</p>
               </div>
             </div>
@@ -83,7 +83,7 @@
           <p>Consiste en tomar los nodos: <span>\(x_0 = a,\ x_1 = \frac{a+b}{2},\ x_2 = b\)</span>. Obtenemos, que el polinomio interpolador presentado en la forma de Lagrange es: $$\small f(a)\,\frac{(x-a-b)(x-b)}{(b-a)^2} - 4f\left(\frac{a+b}{2}\right)\,\frac{(x-a)(x-b)}{(b-a)^2} + f(b)\,\frac{(x-a-b)(x-b)}{(b-a)^2}$$</p>
           <p>Luego de integrar, obtenemos los pesos: <span>\(w_0 = \frac{1}{6}(b-a),\ w_1 = \frac{2}{3}(b-a),\ w_2 = \frac{1}{6}(b-a)\)</span>.</p>
           <div class="formula">
-            <p>Por lo tanto, la regla de Simpson 1/3 es: $$\int_a^b f(x)\,dx = \frac{b-a}{6}\left(f(a) + 4f\left(\frac{a+b}{2}\right) + f(b)\right) + R(\xi)$$ donde el error <span>\(R(\xi) = -\frac{h^5}{90}\,f^{(4)}(\xi)\)</span> con <span>\(h = \frac{b-a}{2}\)</span> para algún <span>\(\xi \in [a,b]\)</span> si <span>\(f \in C^4[a,b]\)</span>.</p>
+            <p>Por lo tanto, la regla de Simpson 1/3 es: $$\int_a^b f(x)\,dx = \frac{b-a}{6}\left(f(a) + 4f\left(\frac{a+b}{2}\right) + f(b)\right) + R(\xi)$$ donde el error <span>\(R(\xi) = -\frac{h^5}{90}\,f^{(4)}(\xi)\)</span> con <span>\(h = \frac{b-a}{2}\)</span> para algún <span>\(\xi \in (a,b)\)</span> si <span>\(f \in C^4[a,b]\)</span>.</p>
           </div>
         </section>
       </section>

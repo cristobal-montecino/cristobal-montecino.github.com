@@ -21,10 +21,10 @@
         <p>Como el error depende de los nodos, es claro que depende de la regla y de la función que escojamos; Es por esto que en la practica no podamos encontrar el error exacto y quedara dependiendo de un parámetro <span>\(\xi\)</span>.</p>
         <div class="formula">
           <p>Para obtener una expresión del error, utilizaremos el teorema del valor medio para integrales.</p>
-          <p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> no cambia de signo, entonces: $$R = f[x_0, ..., x_n, \eta] \int_a^b \prod_{k = 0}^n (x-x_k)\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
+          <p>Si <span>\(\prod_{k = 0}^n (x-x_k)\)</span> no cambia de signo, entonces: $$R = f[x_0, ..., x_n, \eta] \int_a^b \prod_{k = 0}^n (x-x_k)\,dx$$ para algún <span>\(\eta \in (a,b)\)</span>.</p>
           <p>Si cambia de signo, entonces consideramos las derivadas y hacemos una interpolación polinómica de Hermite, esperando que el polinomio interpolador sea equivalente.</p>
           <h4>Teorema de valor medio para diferencias divididas</h4>
-          <p>Además, si <span>\(f \in C^{n+1}[a,b]\)</span> tenemos que existe <span>\(\xi \in [a,b]\)</span> tal que : $$f[x_0, ..., x_n, \eta] = \frac{f(\xi)^{n+1}}{(n+1)!}$$</p>
+          <p>Además, si <span>\(f \in C^{n+1}[a,b]\)</span> tenemos que existe <span>\(\xi \in (a,b)\)</span> tal que : $$f[x_0, ..., x_n, \eta] = \frac{f(\xi)^{n+1}}{(n+1)!}$$</p>
         </div>
         <div class="expandible-content">
           <input type="checkbox" id="demostracion-valor-medio-generalizado" label="">
@@ -32,21 +32,21 @@
           <div class="expandible">
             <div class="formula">
               <p>Si tenemos <span>\(f(x_i) = 0\)</span> para <span>\(i = 0, ..., n\)</span> con <span>\(f \in C[a,b]\)</span>; sabemos que <span>\(f(x_i) = f(x_{i+1})\)</span> para <span>\(i = 0, ..., n-1\)</span>, entonces, por el teorema de Rolle, existen <span>\(y_i \in (x_i, x_{i+1})\)</span> tales que <span>\(f'(y_i) = 0\)</span>.</p>
-              <p>Luego, consideramos la función <span>\(f - p\)</span>, que es la función original restada con el polinomio interpolador en los nodos añadiendo el punto <span>\(\eta\)</span>; sabemos que los nodos son ceros de esta función. Por lo tanto, por lo probado anteriormente, existen <span>\(n - 1\)</span> puntos donde la primera derivada se hace cero. Entonces, de manera reiterada encontraremos un punto <span>\(\xi \in [a,b]\)</span> tal que la <span>\(n + 1\)</span> derivada se hace cero, para esa función.</p>
+              <p>Luego, consideramos la función <span>\(f - p\)</span>, que es la función original restada con el polinomio interpolador en los nodos añadiendo el punto <span>\(\eta\)</span>; sabemos que los nodos son ceros de esta función. Por lo tanto, por lo probado anteriormente, existen <span>\(n - 1\)</span> puntos donde la primera derivada se hace cero. Entonces, de manera reiterada encontraremos un punto <span>\(\xi \in (a,b)\)</span> tal que la <span>\(n + 1\)</span> derivada se hace cero, para esa función.</p>
               <div class="formula">
                 <p>i.e. Considerando la forma de Newton para el polinomio: $$\begin{aligned}0 &= f^{(n+1)}(\xi) - p^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - N^{(n+1)}(\xi)\\&= f^{(n+1)}(\xi) - f[x_0, ..., x_n, \eta]\,(n+1)!\end{aligned}$$</p>
               </div>
-              <p>Finalmente, obtenemos lo que queriamos probar: $$f[x_0, ..., x_n, \eta] = \frac{f^{(n+1)}(\xi)}{(n+1)!}$$ para algún <span>\(\xi \in [a,b]\)</span>.</p>
+              <p>Finalmente, obtenemos lo que queriamos probar: $$f[x_0, ..., x_n, \eta] = \frac{f^{(n+1)}(\xi)}{(n+1)!}$$ para algún <span>\(\xi \in (a,b)\)</span>.</p>
             </div>
           </div>
         </div>
         <p>Notar que lo mencionado anteriormente son las herramientas que ocuparemos para calcular los errores.</p>
         <div class="formula">
-          <p>Finalmente, tenemos que la regla de la cuadratura se puede escribir como: $$\int_a^b f(x)\,dx = \sum_{k=0}^n w_k\,f(x_k) + R(\xi)$$ para algún <span>\(\xi \in [a,b]\)</span></p>
+          <p>Finalmente, tenemos que la regla de la cuadratura se puede escribir como: $$\int_a^b f(x)\,dx = \sum_{k=0}^n w_k\,f(x_k) + R(\xi)$$ para algún <span>\(\xi \in (a,b)\)</span></p>
         </div>
         <p>En la practica, como el valor de <span>\(\xi\)</span> es desconocido, acotaremos el error por el máximo valor de R variando <span>\(\xi\)</span> en el intervalo.</p>
         <div class="formula">
-          <p>Es decir, el error se estima como: $$|R(\xi)| \le \max_{\widehat\xi \in [a,b]} |R(\widehat\xi)|$$</p>
+          <p>Es decir, el error se estima como: $$|R(\xi)| \le \max_{\widehat\xi \in (a,b)} |R(\widehat\xi)|$$</p>
         </div>
       </section>
       <nav>
