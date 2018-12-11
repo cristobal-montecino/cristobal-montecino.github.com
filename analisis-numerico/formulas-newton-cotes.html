@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Apuntes numérico - Integración Numérica</title>
+  <title>Análisis numérico - Integración Numérica</title>
   <meta name="author" lang="es" content="Cristóbal Montecino">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
@@ -10,7 +10,7 @@
 <body>
   <main>
     <section>
-      <h2>Integración numérica por interpolación</h2>
+      <h2>Integración numérica por interpolación polinómica</h2>
       <section>
         <h2>Fórmulas simples de Newton-Cotes</h2>
         <section>
@@ -50,6 +50,7 @@
                 <p>Reemplazando en la formula de error, obtenemos: $$R = \int_a^b f[x_0, x]\,(x-x_0)\,dx$$</p>
                 <p>Como no podemos aplicar el teorema del valor medio para integrales, consideramos la interpolación polinómica de Hermite y obtenemos: $$\begin{aligned}\int_a^b f(x)\,dx &\approx \int_a^b f\left(\frac{a+b}{2}\right) + f'\left(\frac{a+b}{2}\right)\left(x-\frac{a+b}{2}\right)\,dx\\&\approx (b-a)f\left(\frac{a+b}{2}\right) + 0\\&= (b-a)f\left(\frac{a+b}{2}\right) + R\end{aligned}$$</p>
                 <p>Reemplazando en la formula de error, obtenemos: $$R = \int_a^b f[x_0, x_0, x]\,(x-x_0)^2\,dx$$</p>
+                <p>Notar que <span>\(f[x_0, x_0, x]\)</span> no es la diferencia dividida usual, pero es equivalente.</p>
                 <p>Ahora como <span>\((x-x_0)^2\)</span> no cambia de signo, utilizamos el teorema de valor medio para integrales: $$R = f[x_0, x_0, \eta]\,\int_a^b (x-x_0)^2\,dx$$ para algún <span>\(\eta \in [a,b]\)</span>.</p>
                 <p>Ahora, pidiendo que <span>\(f \in C^2[a,b]\)</span> y utilizando el teorema de valor medio para diferencias divididas, tenemos que: $$\begin{aligned}R(\xi) &= \frac{f''(\xi)}{2}\int_a^b (x-x_0)^2\,dx\\&= \frac{(b-a)^3}{24}\,f''(\xi)\end{aligned}$$</p>
               </div>

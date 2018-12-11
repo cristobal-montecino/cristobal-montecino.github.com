@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Apuntes numérico - Integración Numérica</title>
+  <title>Análisis numérico - Integración Numérica</title>
   <meta name="author" lang="es" content="Cristóbal Montecino">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
@@ -10,10 +10,10 @@
 <body>
   <main>
     <section>
-      <h2>Integración numérica por interpolación</h2>
+      <h2>Integración numérica por interpolación polinómica</h2>
       <section>
         <h3>Error de la integración numérica</h3>
-        <p>Sabemos que al considerar el polinomio interpolador en la forma de Newton, tenemos que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{k = 0}^n w_k f(x_k) + \int_a^b E(x)\,dx\\&= \int_a^b N(x)\,dx + \int_a^b E(x)\,dx\end{aligned}$$</p>
+        <p>Sabemos al considerar el polinomio interpolador en la forma de Newton que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{k = 0}^n w_k f(x_k) + \int_a^b E(x)\,dx\\&= \int_a^b N(x)\,dx + \int_a^b E(x)\,dx\end{aligned}$$</p>
         <p>También, sabemos que el error de la interpolación en la forma de Newton es: $$E(x) = f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^{n} (x - x_k)$$</p>
         <div class="formula">
           <p>Por lo tanto, tenemos una expresión para el error de la integración numérica: $$R = \int_a^b E(x)\,dx = \int_a^b f[x_0, x_1, ..., x_n, x]\,\prod_{k = 0}^n (x-x_k)\,dx$$</p>

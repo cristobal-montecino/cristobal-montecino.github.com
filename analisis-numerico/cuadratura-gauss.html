@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Análisis numérico - Integración Numérica</title>
+  <meta name="author" lang="es" content="Cristóbal Montecino">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
+</head>
+<body>
+  <main>
+    <section>
+      <h2>Integración numérica por interpolación polinómica</h2>
+      <section>
+        <h3>Cuadratura de Gauss</h3>
+        <section>
+          <p>Definimos la siguiente norma para las funciones en <span>\(C[a, b]\)</span>: $$\langle f,\,g\rangle = \int_a^b w(x)\,f(x)\,g(x)\,dx$$ con <span>\(w\)</span> un función de peso dada.</p>
+          <h4>Teorema fundamental de la cuadratura de Gauss</h4>
+          <div class="formula">
+            <p>Si tenemos un polinomio <span>\(p_n\)</span> que cumple: $$\int_a^b w(x)\,x^k\,p_n(x)\,dx = \langle x^k, p_n \rangle = 0$$ para todo <span>\(k \in \mathbb{N_0} : k \le n - 1\)</span>.</p>
+            <p>Entonces para una función <span>\(f \in C^{2n}[a,b]\)</span>, tenemos que la cuadratura, tomando como nodos las raices <span>\(\{x_i\}\)</span> de <span>\(p_n\)</span>, es: $$\int_a^b w(x)\,f(x)\,dx = \sum_{i = 0}^{n} w_i\,f(x_i) + R(\xi)$$ donde: $$R(\xi) = \frac{f^{(2n)}(\xi)}{(2n)!}\,\int_a^b w(x)\,\prod_{i = 0}^{n - 1} (x - x_i)^2 \,dx$$</p>
+          </div>
+          <p>Notar que si <span>\(p_n\)</span> fuese un polinomio monico tendríamos que <span>\(p_n(x) = \displaystyle \small \prod_{i = 0}^{n - 1} (x - x_i)\)</span>, entonces: $$\begin{aligned} R(\xi) &= \frac{f^{(2n)}(\xi)}{(2n)!}\,\int_a^b w(x) \prod_{i = 0}^{n - 1}(x-x_i)^2\,dx\\&= \frac{f^{(2n)}(\xi)}{(2n)!}\,\int_a^b w(x)\,p_n(x)^2\,dx\\&= \frac{f^{(2n)}(\xi)}{(2n)!}\,\langle p_n, p_n \rangle\end{aligned}$$</p>
+          <div class="expandible-content">
+            <input type="checkbox" id="deduccion-teorema-fundamental" label="">
+            <label for="deduccion-teorema-fundamental"><h4>Deducción (cuenta con un desarrollo extenso)</h4></label>
+            <div class="expandible">
+              <div class="formula">
+                <p>La idea es escoger los nodos para que se mejore el error de la cuadratura; Anteriormente, para calcular el error de la regla del punto medio, utilizamos una interpolación de Hermite y pudimos mejorar el error. Haremos nuevamente lo mismo; Sea <span>\(H_n\)</span> el polinomio interpolador de Hermite para <span>\(f\)</span> en <span>\(n\)</span> puntos, entonces: $$f(x) = H_n(x) + E(x)$$</p><p>Si <span>\(f \in C^{2n}[a,b]\)</span>, entonces el error es: $$E(x) = \frac{f^{(2n)}(\xi_x)}{(2n)!}\prod_{i = 0}^{n - 1}(x - x_i)^2$$</p><p>Por lo tanto, utilizando el teorema de valor intermedio para integrales, tenemos que: $$\int_a^b w(x)\,f(x)\,dx = \int_a^b H_n(x)\,dx + \frac{f^{(2n)}(\xi)}{(2n)!}\,\int_a^b w(x)\,\prod_{i = 0}^{n - 1}(x - x_i)^2\,dx$$</p><p>Al igual que antes, queremos que <span>\(\displaystyle \small \int_a^b H_n(x)\,dx = \int_a^b L_n(x)\,dx\)</span>, para volver a tener la cuadratura: $$\int_a^b w(x)\,f(x)\,dx = \sum_{i = 0}^{n}\,w_i\,f(x_i) + R(\xi)$$</p>
+                <p>Si lográramos tener esa igualdad, entonces el error seria cero para cualquier polinomio <span>\(f\)</span> de grado a lo más <span>\(2n - 1\)</span>.</p>
+                <p>Ahora, recordemos que si tenemos una interpolación polinomial por <span>\(n\)</span> puntos de la función <span>\(f\)</span>, entonces, pidiendo que <span>\(f \in C^{n}[a,b]\)</span>, el error de la integración numérica es: $$\begin{aligned}R &= \int_a^b f[x_0, ..., x_{n-1}, x]\,\prod_{i = 0}^{n-1}(x - x_i)\,dx\\&= \int_a^b \frac{f^{(n)}(\xi_x)}{n!}\,\prod_{i = 0}^{n-1}(x - x_i)\,dx\end{aligned}$$ Esto implica que si <span>\(f\)</span> es un polinomio de grado a lo más <span>\(n - 1\)</span>, entonces el error es cero, es decir, la cuadratura es exacta.</p>
+                <p>Entonces para tener aquel error, necesitamos que la cuadratura sea exacta para todo polinomio hasta grado <span>\(2n -1\)</span>.</p>
+                <p>Sea <span>\(q\)</span> un polinomio de grado a lo más <span>\(2n - 1\)</span>, entonces queremos que: $$\int_a^b w(x)\,p(x)\,dx = \sum_{i = 0}^n w_i\,q(x_i) + R = \sum_{i = 0}^n w_i\,q(x_i) + 0$$</p><p>Pero ya tenemos que se cumple para los polinomios de grado a lo más <span>\(n - 1\)</span>. Entonces, nuestro objetivo es que al escoger de manera optima los nodos <span>\(\{x_i\}\)</span> nuestro polinomio logre reducir de grado en la cuadratura.</p>
+                <p>Para lograr esto usaremos división sintética de <span>\(q\)</span> entre algún polinomio <span>\(p_n\)</span> de grado \(n\) y obtenemos: $$q(x) = p(x)\,p_n(x) + r(x)$$ para algunos polinomios <span>\(p\)</span> y <span>\(r\)</span>.</p>
+                <p>De esta manera, como <span>\(p_n\)</span> es de grado <span>\(n\)</span> y <span>\(q\)</span> es de grado a lo más <span>\(2n-1\)</span>, el resto <span>\(r\)</span> y el cociente <span>\(p\)</span> es de grado a lo más <span>\(n - 1\)</span>.</p>
+                <p>Luego, en la cuadratura, tendremos que: $$\int_a^b w(x)\,q(x)\,dx = \sum_{i = 0}^n w_i\,q(x_i) + R$$ Como queremos que la cuadratura sea exacta para los polinomios hasta grado <span>\(2n-1\)</span>, se debe cumplir que: $$\begin{aligned}\int_a^b w(x)\,q(x)\,dx &= \sum_{i = 0}^n w_i\,q(x_i) + R\\&= \sum_{i = 0}^n w_i\,q(x_i) + 0\\&= \sum_{i = 0}^n w_i\,(p(x_i)\,p_n(x_i) + r(x_i))\\ &= \sum_{i = 0}^n w_i\,p(x_i)\,p_n(x_i) + \sum_{i = 0}^n w_i\,r(x_i)\end{aligned}$$</p>
+                <p>Ahora, como hicimos esto para reducir el grado en la cuadratura, imponemos que: $$\sum_{i = 0}^n w_i\,p(x_i)\,p_n(x_i) = 0$$</p>
+                <p>Entonces, $$\int_a^b w(x)\, q(x)\,dx = \sum_{i = 0}^{n} w_i\,q(x_i) = \sum_{i = 0}^{n} w_i\,r(x_i)$$</p>
+                <p>Por lo tanto, para que siempre sea cero independiente del polinomio <span>\(q\)</span>, tiene que ser independiente del polinomio <span>\(p\)</span>, entonces <span>\(p_n(x_i) = 0\)</span>, para todos los nodos <span>\(\{x_i\}\)</span>.</p>
+                <p>Esta es nuestra primera condición:<br><center>El polinomio desconocido <span>\(p_n\)</span> debe tener a lo menos <span>\(n\)</span> raices reales y debemos escogerlas como nuestros nodos.</center></p>
+                <p>Ahora, queremos que la cuadratura de <span>\(q\)</span> sea la misma que la cuadratura de <span>\(r\)</span>. Esto es que: $$\int_a^b w(x)\, q(x)\,dx = \sum_{i = 0}^{n} w_i\,q(x_i) = \sum_{i = 0}^{n} w_i\,r(x_i) = \int_a^b w(x)\,r(x)\,dx$$</p>
+                <p>Por lo tanto, como: $$\begin{aligned}\int_a^b w(x)\,q(x)\,dx &= \int_a^b w(x)\,(p(x)\,p_n(x) + r(x))\,dx\\&= \int_a^b w(x)\,p(x)\,p_n(x)\,dx + \int_a^b w(x)\,r(x)\,dx\end{aligned}$$ Se debe cumplir que: $$\int_a^b w(x)\,p(x)\,p_n(x)\,dx = \langle p,\,p_n \rangle = 0$$ para todo polinomio <span>\(p\)</span> de grado a lo más <span>\(n - 1\)</span>.</p>
+                <p>Esto es equivalente, al escribirlo en combinación lineal de la base canónica, a pedir que: $$\int_a^b w(x)\,x^k\,p_n(x)\,dx = \langle x^k,\,p_n \rangle = 0$$ para todo <span>\(k \in \mathbb{N}_0 : k < n\)</span>.</p>
+                <p>Se puede probar que si <span>\(p_n\)</span> cumple aquello, entonces tiene <span>\(n\)</span> raíces y son reales.</p>
+                <p>Finalmente, si se escogen los nodos de manera optima como las raíces de \(p_n\), entonces se cumplirá todo lo que pedimos y tendríamos que el error de la integración numérica es: $$R(\xi) = \frac{f^{(2n)}(\xi)}{(2n)!}\int_a^b w(x)\,\prod_{i = 0}^{n - 1} (x - x_i)^2\,dx$$ si <span>\(f \in C^{2n}[a,b]\)</span>.</p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h4>El valor de los pesos</h4>
+          <div class="formula">
+            <p>Ya sabemos como escoger los nodos; Ahora el valor de los pesos es: $$w_i = \frac{c_n}{c_{n+1}}\,\frac{1}{p'_n(x_i)\,p_{n-1}(x_i)}\,\langle p_{n - 1}, p_{n - 1}\rangle$$ donde <span>\(c_k\)</span> es el coeficiente principal del polinomio <span>\(p_k\)</span>.</p>
+          </div>
+          <div class="expandible-content">
+            <input type="checkbox" id="deduccion-pesos" label="">
+            <label for="deduccion-pesos"><h4>Deducción (cuenta con un desarrollo extenso)</h4></label>
+            <div class="expandible">
+              <div class="formula">
+                <p>Sabemos que los pesos de la cuadratura se calculan integrando el polinomio interpolador en la forma de Lagrange: $$w_i = \int_a^b w(x)\,\prod_{j = 0,\,j \neq i}^{n - 1}\frac{x - x_j}{x_i - x_j}\,dx$$</p>
+                <p>Pero como los nodos son las raíces del polinomio <span>\(p_n\)</span>, entonces: $$p_n(x) = c_n\,\prod_{i = 0}^{n - 1} (x - x_i)$$</p>
+                <p>Entonces, podemos despejar el termino laborioso: $$\prod_{j = 0,\,j \neq i}^{n - 1} \frac{x-x_j}{x_i - x_j} \stackrel{\small[\text{como}]}{=} \frac{1}{c_n}\,\frac{p_n(x)}{x - x_i}\,{\small\prod_{j = 0,\,j \neq i}^{n - 1}} \frac{1}{x - x_j}$$</p>
+                <p>Ahora, aquella productoria se puede despejar escogiendo un valor para <span>\(x\)</span> de manera correcta.</p>
+                <p>Escogemos <span>\(x = x_i\)</span> y obtenemos: $$\begin{aligned}1 = \prod_{j = 0,\,j \neq i}^{n - 1}\frac{x_i - x_j}{x_i - x_j} &\stackrel{\small [continuidad]}{=}\ \lim_{x \to x_i}\,\frac{1}{c_n}\,\frac{p_n(x)}{x - x_i}\,{\small\prod_{j = 0,\,j\neq i}^{n - 1}}\frac{1}{x - x_j}\\&\hspace{13pt}= \frac{1}{c_n}\,{\small\prod_{j = 0,\,j \neq i}^{n-1}}\frac{1}{x_i - x_j}\,\lim_{x\to x_i}\,\frac{p_n(x)}{x - x_i}\\&\hspace{10pt}\stackrel{\small[L'H]}{=} \frac{1}{c_n}\,{\small\prod_{j = 0,\,j \neq i}^{n-1}}\frac{1}{x_i - x_j}\,\lim_{x\to x_i}\,\frac{p'_n(x)}{1}\\&\hspace{13pt}= \frac{1}{c_n}\,{\small\prod_{j = 0,\,j \neq i}^{n-1}}\frac{1}{x_i - x_j}\,p_n'(x_i)\\&\hspace{13pt}= \frac{p'_n(x_i)}{c_n}\,{\small\prod_{j = 0,\,j \neq i}^{n-1}}\frac{1}{x_i - x_j}\end{aligned}$$</p>
+                <p>Entonces, $$1 = \frac{p'_n(x_i)}{c_n}\,{\small\prod_{j = 0,\,j \neq i}^{n-1}}\frac{1}{x_i - x_j}$$</p>
+                <p>Por lo tanto, $$\begin{aligned}\prod_{j = 0,\,j \neq i}^{n - 1} \frac{x-x_j}{x_i - x_j} &= \frac{1}{c_n}\,\frac{p_n(x)}{x - x_i}\,{\small\prod_{j = 0,\,j \neq i}^{n - 1}}\frac{1}{x - x_j},\hspace{10pt}{\small[\text{despejando de lo anterior}]}\\&= \frac{1}{c_n}\,\frac{p_n(x)}{x - x_i}\,\frac{c_n}{p'_n(x_i)}\\&= \frac{1}{p'_n(x_i)}\,\frac{p_n(x)}{x - x_i}\end{aligned}$$</p>
+                <p>Esto implica que: $$\begin{aligned}w_i &= \int_a^b w(x)\,\prod_{j = 0,\, j \neq i}^{n - 1}\frac{x - x_j}{x_i - x_j}\,dx\\&= \int_a^b w(x)\,\frac{1}{p'_n(x_i)}\,\frac{p_n(x)}{x - x_i}\,dx\\&= \frac{1}{p'_n(x_i)}\,\int_a^b w(x)\,\frac{1}{x - x_i}\,p_n(x)\,dx\\&= \frac{1}{p'_n(x_i)}\,\left\langle \frac{1}{x - x_i},\, p_n \right\rangle\end{aligned}$$</p>
+                <p>Trataremos de despejar el termino que nos molesta utilizando integración por partes con alguna función <span>\(g\)</span> desconocida: $$\left\langle \frac{g}{x - x_i},\,p_n \right\rangle = \int_a^b w(x)\,\frac{g(x)}{x - x_i}\,p_n(x)\,dx$$</p>
+                <p>Si <span>\(g\)</span> es un polinomio de grado <span>\(m\)</span>, entonces, al expresarlo como combinación lineal de la base canónica, tenemos que: $$\begin{aligned}\left\langle \frac{g}{x - x_i},\,p_n \right\rangle &= \int_a^b w(x)\,\frac{g(x)}{x-x_i}\,p_n(x)\,dx\\&= \int_a^b w(x)\,\frac{\displaystyle\small\sum_{k = 0}^{m} \alpha_k\,x^k}{x - x_i}\,p_n(x)\,dx\\&= \sum_{k = 0}^m \alpha_k\,\int_a^b w(x)\,\frac{x^k}{x - x_i}\,p_n(x)\,dx\\&= \sum_{k = 0}^m \alpha_k \left\langle\frac{x^k}{x - x_i},\,p_n\right\rangle\end{aligned}$$</p>
+                <p>Modificando un poco, sabemos, por la ortogonalidad, que: $$\left\langle\frac{x^k - x_i^k}{x - x_i},\,p_n\right\rangle = 0$$ porque <span>\(\frac{x^k - x_i^k}{x - x_i}\)</span> es un polinomio de grado a lo más <span>\(n - 1\)</span> para <span>\(k \in \mathbb{N}_0 : k \le n\)</span>.</p>
+                <p>Entonces, $$\begin{aligned}0 &= \left\langle \frac{x^k - x_i^k}{x - x_i},\, p_n \right\rangle,\hspace{10pt}{\small[\text{linealidad}]}\\&= \left\langle \frac{x^k}{x - x_i},\, p_n \right\rangle - x_i^k\,\left\langle \frac{1}{x - x_i},\, p_n \right\rangle\end{aligned}$$</p>
+                <p>Por lo tanto, $$\left\langle \frac{x^k}{x - x_i},\, p_n \right\rangle = x_i^k\,\left\langle \frac{1}{x - x_i},\, p_n \right\rangle$$</p>
+                <p>Luego, si <span>\(m \le n\)</span> tenemos que: $$\begin{aligned}\left\langle \frac{g}{x - x_i},\,p_n \right\rangle &= \sum_{k = 0}^m \alpha_k \left\langle\frac{x^k}{x - x_i},\,p_n\right\rangle\\&= \sum_{k = 0}^m \alpha_k\,x_i^k\,\left\langle \frac{1}{x - x_i},\, p_n \right\rangle\\&= \left\langle \frac{1}{x - x_i},\, p_n \right\rangle\,\sum_{k = 0}^m \alpha_k\,x_i^k, \hspace{10pt}{\small[\text{combinacion lineal}]}\\&= \left\langle \frac{1}{x - x_i},\, p_n \right\rangle\,g(x_i)\end{aligned}$$</p>
+                <p>Resulto en que no es necesario hacer integración por partes, ya que encontramos la siguiente expresión: $$\left\langle \frac{1}{x - x_i},\, p_n \right\rangle = \frac{1}{g(x_i)}\,\left\langle \frac{g}{x - x_i},\, p_n \right\rangle$$</p>
+                <p>Por lo tanto, $$\begin{aligned}w_i &= \frac{1}{p'_n(x_i)}\,\left\langle\frac{1}{x - x_i}\, p_n\right\rangle\\&= \frac{1}{p'_n(x_i)}\,\frac{1}{g(x_i)}\,\left\langle\frac{g}{x - x_i},\,p_n\right\rangle\end{aligned}$$</p>
+                <p>Entonces, nos hace falta encontrar algún polinomio <span>\(g\)</span> que nos de una expresión para poder avanzar.</p>
+                <p>Antes, podemos re-ordenar la expresión: $$\begin{aligned}w_i &= \frac{1}{p'_n(x_i)}\,\frac{1}{g(x_i)}\,\left\langle \frac{g}{x-x_i},\,p_n\right\rangle\\&= \frac{1}{p'_n(x_i)}\,\frac{1}{g(x_i)}\,\left\langle \frac{p_n}{x - x_i},\,g\right\rangle\end{aligned}$$</p>
+                <p>Notemos que <span>\(\frac{p_n}{x - x_i}\)</span> es un polinomio de grado <span>\(n-1\)</span></p>
+                <p>Recordemos que el termino <span>\(x^{n-1}\)</span> es el unico que le importa al polinomio <span>\(p_{n-1}\)</span> porque: $$\begin{aligned}\langle p_{n-1}, p_{n-1}\rangle &= \langle c_{n-1}\,x^{n-1} + {\small\sum_{k = 0}^{n-2}{\beta_i}}\,x^k,\,p_{n-1}\rangle\\&= c_{n-1}\langle x^{n-1},\,p_{n-1}\rangle + \langle{\small\sum_{k = 0}^{n-2}{\beta_i}}\,x^k,\,p_{n-1}\rangle\\&= c_{n-1}\langle x^{n-1},\,p_{n-1}\rangle\end{aligned}$$</span></p>
+                <p>Por lo tanto, $$\langle x^{n-1},\,p_{n-1}\rangle = \frac{1}{c_{n-1}}\,\langle p_{n-1},\,p_{n-1}\rangle$$</p>
+                <p>Entonces, probaremos con <span>\(g = p_{n-1}\)</span> para solo preocuparnos del termino de orden mayor y tendremos que: $$\begin{aligned}w_i &= \frac{1}{p'_n(x_i)}\,\frac{1}{p_{n-1}(x_i)}\,\left\langle\frac{p_n}{x-x_i},\,p_{n-1}\right\rangle,\hspace{10pt}{\small[\text{Por lo anterior}]}\\&=\frac{1}{p'_n(x_i)}\,\frac{1}{p_{n-1}(x_i)}\,c_n\,\left\langle x^{n - 1},\,p_{n - 1}\right\rangle\\&= \frac{1}{p'_n(x_i)\,p_{n-1}(x_i)}\,c_n\,\langle x^{n-1},\,p_{n-1}\rangle\\&= \frac{1}{p'_n(x_i)\,p_{n-1}(x_i)}\,c_n\,\frac{1}{c_{n-1}}\,\langle p_{n-1},\,p_{n-1}\rangle\\&= \frac{c_n}{c_{n-1}}\,\frac{1}{p'_n(x_i)\,p_{n-1}(x_i)}\,\langle p_{n-1},\,p_{n-1}\rangle\end{aligned}$$</p>
+                <p>Finalmente, $$w_i = \frac{c_n}{c_{n-1}}\,\frac{1}{p'_n(x_i)\,p_{n-1}(x_i)}\,\langle p_{n-1},\,p_{n-1}\rangle$$</p>
+              </div>
+            </div>
+        </section>
+      </section>
+      <nav>
+        <div style="display: inline-block; float: left;">
+          <a href="formulas-compuestas.html">Anterior - Formulas compuestas de Newton-Cotes</a>
+        </div>
+        <div style="display: inline-block; float: right;">
+          <a href="#">Siguiente</a>
+        </div>
+      </nav>
+      <section>
+        <div class="references">
+          <h3>Referencias</h3>
+          <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Gaussian_quadrature">https://en.wikipedia.org/wiki/Gaussian_quadrature</a></li>
+            <li><a href="http://www.cs.umd.edu/~onwunta/Gaussian.pdf">http://www.cs.umd.edu/~onwunta/Gaussian.pdf</a></li>
+            <li><a href="http://www.math.vt.edu/people/embree/math5466/lecture24.pdf">http://www.math.vt.edu/people/embree/math5466/lecture24.pdf</a></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html> 

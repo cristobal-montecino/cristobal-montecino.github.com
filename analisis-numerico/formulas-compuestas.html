@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Apuntes numérico - Integración Numérica</title>
+  <title>Análisis numérico - Integración Numérica</title>
   <meta name="author" lang="es" content="Cristóbal Montecino">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" async src="MathJax/MathJax.js?config=custom"></script>
@@ -10,7 +10,7 @@
 <body>
   <main>
     <section>
-      <h2>Integración numérica por interpolación</h2>
+      <h2>Integración numérica por interpolación polinómica</h2>
       <section>
         <h2>Formulas compuestas de Newton-Cotes</h2>
         <p>Consiste en subdividir el intervalo de manera equiespaciada y aplicar en cada una alguna de las formulas simples de Newton-Cotes.</p>
@@ -29,7 +29,7 @@
             <label for="demostracion-punto-medio-compuesta"><h4>Demostración</h4></label>
             <div class="expandible">
               <div class="formula">
-                <p>Tenemos por definición: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n-1} \int_{x_i}^{x_{i+1}} f(x)\,dx\\&\approx \sum_{i=0}^{n-1} (x_{i+1} - x_i)\,f\left(\frac{x_i + x_{i+1}}{2}\right),\hspace{10pt}[{\small \text{Utilizando equiespaciado}}]\\&\approx h \sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right)\\&= \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + \sum_{i = 0}^{n-1}R_i\\&= \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + R\end{aligned}$$</p>
+                <p>Tenemos por definición: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n-1} \int_{x_i}^{x_{i+1}} f(x)\,dx\\&\approx \sum_{i=0}^{n-1} (x_{i+1} - x_i)\,f\left(\frac{x_i + x_{i+1}}{2}\right),\hspace{10pt}{\small[\text{Utilizando equiespaciado}]}\\&\approx h \sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right)\\&= \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + \sum_{i = 0}^{n-1}R_i\\&= \frac{b-a}{n}\sum_{i = 0}^{n-1}f\left(\frac{x_i + x_{i+1}}{2}\right) + R\end{aligned}$$</p>
                 <p>Calculamos el error pidiendo <span>\(f \in C^2[a,b]\)</span>: $$\begin{aligned}R &= \sum_{i = 0}^{n-1}R_i\\&= \sum_{i = 0}^{n-1}\frac{(x_{i+1} - x_i)^3}{24}\,f''(\xi_i)\\&= \sum_{i = 0}^{n-1}\frac{h^3}{24}\,f''(\xi_i)\end{aligned}$$</p>
                 <p>Acotamos el error: $$|R| = \left|\frac{h^3}{24}\sum_{i = 0}^{n-1} f''(\xi_i)\right| \le \frac{h^3}{24}\left|\sum_{i = 0}^{n-1} \max_{\xi \in [a,b]}f''(\xi)\right| = \frac{h^3}{24} n\, \left|\max_{\xi \in [a,b]}f''(\xi)\right| = \frac{h^3}{24} n\,\max_{\xi \in [a,b]}|f''(\xi)|$$ Finalmente como <span>\(h = \frac{b-a}{n}\)</span>, tenemos que: $$|R| \le \frac{h^2}{24}(b-a)\,\max_{\xi \in [a,b]}|f''(\xi)|$$</p>
               </div>
@@ -46,8 +46,8 @@
             <label for="demostracion-simpson-13-compuesta"><h4>Demostración</h4></label>
             <div class="expandible">
               <div class="formula">
-                <p>Por definición, tenemos que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n-1}\int_{x_i}^{x_{i+1}} f(x)\,dx\\&\approx\sum_{i = 0}^{n-1} \frac{x_{i+1} - x_i}{6}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right),\hspace{10pt}[{\small\text{equiespaciado}}]\\&\approx\sum_{i = 0}^{n-1}\frac{h}{6}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right)\\&= \frac{h}{6}\sum_{i = 0}^{n-1}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right) + \sum_{i = 0}^{n-1} R_i\\&= \frac{h}{6}\sum_{i = 0}^{n-1}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right) + R\end{aligned}$$</p>
-                <p>Calcularemos el error pidiendo <span>\(f \in C^4[a,b]\)</span>: $$\begin{aligned}R &= \sum_{i = 0}^{n-1} R_i\\&= -\sum_{i = 0}^{n-1} \frac{\left(\frac{x_{i+1} - x_i}{2}\right)^5}{90}\,f^{(4)}(\xi_i),\hspace{10pt}[{\small\text{equiespaciado}}]\\&= -\sum_{i = 0}^{n-1} \frac{\left(\frac{h}{2}\right)^5}{90}\,f^{(4)}(\xi_i)\end{aligned}$$</p>
+                <p>Por definición, tenemos que: $$\begin{aligned}\int_a^b f(x)\,dx &= \sum_{i = 0}^{n-1}\int_{x_i}^{x_{i+1}} f(x)\,dx\\&\approx\sum_{i = 0}^{n-1} \frac{x_{i+1} - x_i}{6}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right),\hspace{10pt}{\small[\text{equiespaciado}]}\\&\approx\sum_{i = 0}^{n-1}\frac{h}{6}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right)\\&= \frac{h}{6}\sum_{i = 0}^{n-1}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right) + \sum_{i = 0}^{n-1} R_i\\&= \frac{h}{6}\sum_{i = 0}^{n-1}\left(f(x_i + 4f\left(\frac{x_i + x_{i+1}}{2}\right) + f(x_{i+1})\right) + R\end{aligned}$$</p>
+                <p>Calcularemos el error pidiendo <span>\(f \in C^4[a,b]\)</span>: $$\begin{aligned}R &= \sum_{i = 0}^{n-1} R_i\\&= -\sum_{i = 0}^{n-1} \frac{\left(\frac{x_{i+1} - x_i}{2}\right)^5}{90}\,f^{(4)}(\xi_i),\hspace{10pt}{[\small\text{equiespaciado}]}\\&= -\sum_{i = 0}^{n-1} \frac{\left(\frac{h}{2}\right)^5}{90}\,f^{(4)}(\xi_i)\end{aligned}$$</p>
                 <p>Acotamos el error: $$|R| = \left|\sum_{i = 0}^{n-1} \frac{\left(\frac{h}{2}\right)^5}{90}\,f^{(4)}(\xi_i)\right| = \frac{\left(\frac{h}{2}\right)^5}{90}\left|\sum_{i = 0}^{n-1} f^{(4)}(\xi_i)\right| \le \frac{\left(\frac{h}{2}\right)^5}{90}\left|\sum_{i = 0}^{n-1} \max_{\xi \in [a,b]}f^{(4)}(\xi)\right| = \frac{\left(\frac{h}{2}\right)^5}{90}n\,\max_{\xi \in [a,b]}\left|f^{(4)}(\xi)\right|$$ Entonces, como <span>\(h = \frac{b-a}{n}\)</span>, tenemos que: $$|R| \le \frac{\left(\frac{h}{2}\right)^4}{180}(b-a)\,\max_{\xi \in [a,b]}\left|f^{(4)}(\xi)\right|$$</p>
                 <p>Finalmente, si dividimos los intervalos en la mitad, es decir, tomamos la partición con <span>\(h = \frac{1}{2}\frac{b-a}{n}\)</span>, tenemos que: $$\int_a^b f(x)\,dx = \frac{h}{3}\sum_{k = 0,\,i = 2k}^{n/2\,\text{-}\,1}\Bigl(f(x_i + 4f(x_{i+1}) + f(x_{i+2}) \Bigr) + R$$ donde <span>\(|R| \le \frac{h^4}{180}(b-a)\,\displaystyle\max_{\xi \in [a,b]}\left|f^{(4)}(\xi)\right|\)</span></p>
               </div>
@@ -60,7 +60,7 @@
           <a href="formulas-newton-cotes.html">Anterior - Formulas simples de Newton-Cotes</a>
         </div>
         <div style="display: inline-block; float: right;">
-          <a href="#">Siguiente - Regla de Gauss-Legendre</a>
+          <a href="cuadratura-gauss.html">Siguiente - Cuadratura de Gauss</a>
         </div>
       </nav>
       <section>
